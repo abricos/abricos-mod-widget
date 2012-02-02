@@ -7,32 +7,23 @@
 
 var Component = new Brick.Component();
 Component.requires = {
-	yahoo:['calendar']
+	yahoo:['calendar'],
+	mod:[{name: 'sys', files: ['date.js']}]
 };
-Component.entryPoint = function(){
+Component.entryPoint = function(NS){
 	
 	var Dom = YAHOO.util.Dom,
 		E = YAHOO.util.Event,
 		L = YAHOO.lang;
 	
-	var NS = this.namespace, 
-		TMG = this.template,
-		API = NS.API;
+	var NSys = Brick.mod.sys;
 	
-	var initCSS = false,
-		buildTemplate = function(w, ts){
-		if (!initCSS){
-			Brick.util.CSS.update(Brick.util.CSS['widget']['calendar']);
-			delete Brick.util.CSS['widget']['calendar'];
-			initCSS = true;
-		}
-		w._TM = TMG.build(ts); w._T = w._TM.data; w._TId = w._TM.idManager;
-	};
+	var buildTemplate = this.buildTemplate;
 	
 	var YDate = YAHOO.widget.DateMath;
 
 	NS.isCurrentDay = function(date){
-		return YDate.clearTime(date).getTime() == YDate.clearTime(NS.getDate()).getTime(); 
+		return YDate.clearTime(date).getTime() == YDate.clearTime(NSys.getDate()).getTime(); 
 	};
 	
 	NS.dateToKey = function(date){
@@ -97,7 +88,7 @@ Component.entryPoint = function(){
 		var oCalendar = new YAHOO.widget.Calendar(Dom.generateId(), dialog.body.id);
 		NS.calendarLocalize(oCalendar);
 
-		var date = NS.stringToDate(elInput.value);
+		var date = NSys.stringToDate(elInput.value);
 		if (!L.isNull(date)){
 			oCalendar.select(date);
 			oCalendar.cfg.setProperty("pagedate", (date.getMonth()+1) + "/" + date.getFullYear());
@@ -157,8 +148,8 @@ Component.entryPoint = function(){
 			this.gel('time').value = "";
 		},
 		_updateDate: function(){
-			var date = NS.stringToDate(this.gel('date').value),
-				time = NS.parseTime(this.gel('time').value);
+			var date = NSys.stringToDate(this.gel('date').value),
+				time = NSys.parseTime(this.gel('time').value);
 			
 			if (!L.isNull(date)){
 				date.setHours(time[0]);
@@ -179,8 +170,8 @@ Component.entryPoint = function(){
 				}
 			}
 
-			this.gel('date').value = NS.dateToString(date);
-			this.gel('time').value = NS.timeToString(date);
+			this.gel('date').value = NSys.dateToString(date);
+			this.gel('time').value = NSys.timeToString(date);
 			
 			this._date = date;
 		},
@@ -231,83 +222,5 @@ Component.entryPoint = function(){
 	};
 	
 	NS.DateInputWidget = DateInputWidget;
-	
-
-	NS.getDate = function(){ return new Date(); };
-	
-	var lz = function(num){
-		var snum = num+'';
-		return snum.length == 1 ? '0'+snum : snum; 
-	};
-	
-	var TZ_OFFSET = NS.getDate().getTimezoneOffset();
-	TZ_OFFSET = 0;
-	
-	NS.dateToServer = function(date){
-		if (L.isNull(date)){ return 0; }
-		var tz = TZ_OFFSET*60*1000;
-		return (date.getTime()-tz)/1000; 
-	};
-	NS.dateToClient = function(unix){
-		unix = unix * 1;
-		if (unix == 0){ return null; }
-		var tz = TZ_OFFSET*60;
-		return new Date((tz+unix)*1000);
-	};
-	
-	NS.dateToTime = function(date){
-		return lz(date.getHours())+':'+lz(date.getMinutes());
-	};
-	
-	var DPOINT = '.';
-	NS.dateToString = function(date){
-		if (L.isNull(date)){ return ''; }
-		var day = date.getDate();
-		var month = date.getMonth()+1;
-		var year = date.getFullYear();
-		return lz(day)+DPOINT+lz(month)+DPOINT+year;
-	};
-	NS.stringToDate = function(str){
-		str = str.replace(/,/g, '.').replace(/\//g, '.');
-		var aD = str.split(DPOINT);
-		if (aD.length != 3){ return null; }
-		var day = aD[0]*1, month = aD[1]*1-1, year = aD[2]*1;
-		if (day > 31 || day < 0){ return null; }
-		if (month > 11 || month < 0) { return null; }
-		return new Date(year, month, day);
-	};
-	
-	NS.timeToString = function(date){
-		if (L.isNull(date)){ return ''; }
-		return lz(date.getHours()) +':'+lz(date.getMinutes());
-	};
-	NS.parseTime = function(str){
-		var a = str.split(':');
-		if (a.length != 2){ return null; }
-		var h = a[0]*1, m = a[1]*1;
-		if (!(h>=0 && h<=23 && m>=0&&m<=59)){ return null; }
-		return [h, m];
-	};
-	
-	// кол-во дней, часов, минут (параметр в секундах)
-	NS.timeToSSumma = function(hr){
-		var ahr = [];
-		var d = Math.floor(hr / (60*60*24));
-		if (d > 0){
-			hr = hr-d*60*60*24;
-			ahr[ahr.length] = d+'д';
-		}
-		var h = Math.floor(hr / (60*60));
-		if (h > 0){
-			hr = hr-h*60*60;
-			ahr[ahr.length] = h+'ч';
-		}
-		var m = Math.floor(hr / 60);
-		if (m > 0){
-			hr = hr-m*60;
-			ahr[ahr.length] = m+'м';
-		}
-		return ahr.join(' ');
-	};
 	
 };
