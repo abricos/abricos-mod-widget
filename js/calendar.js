@@ -85,7 +85,9 @@ Component.entryPoint = function(NS){
 		dialog.body.id = Dom.generateId();
 		dialog.render(document.body);
 
-		var oCalendar = new YAHOO.widget.Calendar(Dom.generateId(), dialog.body.id);
+		var oCalendar = new YAHOO.widget.Calendar(Dom.generateId(), dialog.body.id, {
+			'start_weekday': 1
+		});
 		NS.calendarLocalize(oCalendar);
 
 		var date = NSys.stringToDate(elInput.value);
