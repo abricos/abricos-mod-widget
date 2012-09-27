@@ -21,6 +21,11 @@ Component.entryPoint = function(NS){
 	var buildTemplate = this.buildTemplate;
 	
 	var YDate = YAHOO.widget.DateMath;
+	
+	var lz = function(num){
+		var snum = num+'';
+		return snum.length == 1 ? '0'+snum : snum; 
+	};
 
 	NS.isCurrentDay = function(date){
 		return YDate.clearTime(date).getTime() == YDate.clearTime(NSys.getDate()).getTime(); 
@@ -123,12 +128,17 @@ Component.entryPoint = function(NS){
 			'showBClear': true,
 			
 			// показать кнопку "уточнить время/убрать время"
-			'showBTime': true
+			'showBTime': true,
+			
+			// учитывать секунды
+			'showSeconds': false
 		}, cfg || {});
 		this.init(container, cfg);
 	};
 	DateInputWidget.prototype = {
 		init: function(container, cfg){
+			
+			this.changedEvent = new YAHOO.util.CustomEvent('changedEvent');
 			
 			buildTemplate(this, 'input');
 			container.innerHTML = this._TM.replace('input');
@@ -143,39 +153,77 @@ Component.entryPoint = function(NS){
 			this.setTimeVisible(cfg['showTime']);
 			this.setBClearVisible(cfg['showBClear']);
 			this.setBTimeVisible(cfg['showBTime']);
+			
+			this._showSeconds = cfg['showSeconds'];
+			
+			if (cfg['showSeconds']){
+				Dom.addClass(this.gel('time'), 'dttimesec');
+			}
+			
+			var __self = this;
+			E.on(this.gel('time'), 'blur', function(){
+				__self._updateDate();
+			});
+			
+			E.on(this.gel('time'), 'keypress', function(e){
+				if (e.keyCode != 13){ return false; }
+				__self._updateDate();
+				return true;
+			});
 		},
+		destroy: function(){ },
 		clear: function(){
 			this._date = null;
 			this.gel('date').value = "";
 			this.gel('time').value = "";
 		},
 		_updateDate: function(){
+			var v = this.gel('time').value.replace(/,/gi, ':').replace(/\./gi, ':'),
+				va = v.split(':');
+		
+			var h = va[0]*1, m = va[1]*1, s = va[2]*1;
+			if (!(h>=0 && h<=24)){ h = 0; }
+			if (!(m>=0 && m<=59)){ m = 0; }
+			if (!(s>=0 && s<=59)){ s = 0; }
+
 			var date = NSys.stringToDate(this.gel('date').value),
-				time = NSys.parseTime(this.gel('time').value);
+				time = NSys.parseTime(lz(h)+':'+lz(m)+':'+lz(s));
 			
 			if (!L.isNull(date)){
 				date.setHours(time[0]);
 				date.setMinutes(time[1]);
+				date.setSeconds(time[2]);
 			}
 			
 			this.setDate(date);
 		},
+		onChanged: function(){
+			this.changedEvent.fire(this);
+		},
 		setDate: function(date, notTime){
+			var sDate = this._date;
+			
 			if (L.isNull(date)){
 				this.clear();
-				return;
-			}
-			if (notTime){ // время не менять
-				var dt = this._date;
-				if (!L.isNull(dt)){
-					date.setHours(dt.getHours(), dt.getMinutes(), 0, 0);
+			}else{
+				if (notTime){ // время не менять
+					var dt = this._date;
+					if (!L.isNull(dt)){
+						date.setHours(dt.getHours(), dt.getMinutes(), 0, 0);
+					}
 				}
-			}
 
-			this.gel('date').value = NSys.dateToString(date);
-			this.gel('time').value = NSys.timeToString(date);
+				this.gel('date').value = NSys.dateToString(date);
+				this.gel('time').value = NSys.timeToString(date, this._showSeconds);
+				this._date = date;
+			}
 			
-			this._date = date;
+			var d1 = (!this._date || L.isNull(this._date)) ? 0 : this._date.getTime();
+			var d2 = (!sDate || L.isNull(sDate)) ? 0 : sDate.getTime();
+			
+			if (d1 != d2){
+				this.onChanged();
+			}
 		},
 		getDate: function(){
 			this._updateDate();
@@ -208,6 +256,9 @@ Component.entryPoint = function(NS){
 		onClick: function(el){
 			var tp = this._TId['input'];
 			switch(el.id){
+			case tp['time']:
+				try{el.select();}catch(e){};
+			return true;
 			case tp['date']: this.showCalendar(); return true;
 			case tp['clear']: this.clear(); return true;
 			case tp['timeshow']: this.setTimeVisible(true); return true;

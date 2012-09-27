@@ -1,5 +1,5 @@
-Brick.util.Language.add('ru',{'mod': {'widget': {
-	'calendar':{
+Brick.util.Language.add('ru',{'mod': {'{C#MODNAME}':{
+	'calendar': {
 		'week': {
 			'0': 'воскресенье',
 			'1': 'понедельник',
@@ -45,6 +45,10 @@ Brick.util.Language.add('ru',{'mod': {'widget': {
 				'11': 'ноя',
 				'12': 'дек'
 			}
+		},
+		'input': {
+			'1': 'уточнить время',
+			'2': 'убрать время'
 		}
 	}
 }}});
