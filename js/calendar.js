@@ -131,7 +131,9 @@ Component.entryPoint = function(NS){
 			'showBTime': true,
 			
 			// учитывать секунды
-			'showSeconds': false
+			'showSeconds': false,
+			
+			'readonly': false
 		}, cfg || {});
 		this.init(container, cfg);
 	};
@@ -142,6 +144,11 @@ Component.entryPoint = function(NS){
 			
 			buildTemplate(this, 'input');
 			container.innerHTML = this._TM.replace('input');
+			
+			if (cfg['readonly']){
+				Dom.setStyle(this.gel('rocont'), 'display', '');
+				Dom.setStyle(this.gel('inpcont'), 'display', 'none');
+			}
 
 			var __self = this;
 			E.on(container, 'click', function(e){
@@ -176,6 +183,9 @@ Component.entryPoint = function(NS){
 			this._date = null;
 			this.gel('date').value = "";
 			this.gel('time').value = "";
+
+			this.gel('datero').innerHTML = "";
+			this.gel('timero').innerHTML = "";
 		},
 		_updateDate: function(){
 			var v = this.gel('time').value.replace(/,/gi, ':').replace(/\./gi, ':'),
@@ -212,9 +222,16 @@ Component.entryPoint = function(NS){
 						date.setHours(dt.getHours(), dt.getMinutes(), 0, 0);
 					}
 				}
+				
+				var sd = NSys.dateToString(date),
+					st = NSys.timeToString(date, this._showSeconds);
 
-				this.gel('date').value = NSys.dateToString(date);
-				this.gel('time').value = NSys.timeToString(date, this._showSeconds);
+				this.gel('date').value = sd;
+				this.gel('time').value = st;
+				
+				this.gel('datero').innerHTML = sd;
+				this.gel('timero').innerHTML = st;
+				
 				this._date = date;
 			}
 			

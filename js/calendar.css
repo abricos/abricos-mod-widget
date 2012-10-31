@@ -29,3 +29,7 @@
 	text-decoration: none;
 	margin-left: 6px;
 }
+
+.aw-widget .datetime-input .timeor {
+	margin-left: 5px;
+}

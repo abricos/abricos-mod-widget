@@ -1,12 +1,18 @@
 <!--{input}--><div class="aw-widget">
 	<div class="datetime-input">
-		<input id="{i#date}" class="dt" value="" />
-		<input id="{i#time}" class="dttime" value="" style="display: none;"/>
-		
-		<a id="{i#clear}" class="icon-clear" href="#"></a>
-		<span id="{i#btime}">
-			<a id="{i#timeshow}" class="clickable" href="#">{#mod.widget.calendar.input.1}</a>
-			<a id="{i#timehide}" class="clickable" href="#" style="display: none;">{#mod.widget.calendar.input.2}</a>
-		</span>
+		<div id="{i#rocont}" class="rocont" style="display: none">
+			<span id="{i#datero}" class="datero"></span>
+			<span id="{i#timero}" class="timeor"></span>
+		</div>
+		<div id="{i#inpcont}" class="inpcont">
+			<input id="{i#date}" class="dt" value="" />
+			<input id="{i#time}" class="dttime" value="" style="display: none;"/>
+			
+			<a id="{i#clear}" class="icon-clear" href="#"></a>
+			<span id="{i#btime}">
+				<a id="{i#timeshow}" class="clickable" href="#">{#mod.widget.calendar.input.1}</a>
+				<a id="{i#timehide}" class="clickable" href="#" style="display: none;">{#mod.widget.calendar.input.2}</a>
+			</span>
+		</div>
 	</div>
 </div>
