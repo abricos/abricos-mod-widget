@@ -134,9 +134,17 @@ Component.entryPoint = function(NS){
 			}
 		},
 		elSetHTML: function(tname, html){
-			var el = this.gel(tname);
-			if (L.isNull(el)){ return; }
-			el.innerHTML = html;
+			if (!L.isObject(tname)){
+				var obj = {};
+				obj[tname] = html;
+				tname = obj;
+			}
+			for (var n in tname){
+				var el = this.gel(n);
+				if (!L.isNull(el)){ 
+					el.innerHTML = tname[n];
+				}
+			}
 		},
 		componentLoad: function(module, component, callback, cfg){
 			cfg = L.merge({
