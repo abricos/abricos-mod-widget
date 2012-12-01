@@ -133,16 +133,29 @@ Component.entryPoint = function(NS){
 				Dom.setStyle(el, 'display', show ? '' : 'none');
 			}
 		},
-		elSetHTML: function(tname, html){
+		_getNVObject: function(tname, html){
 			if (!L.isObject(tname)){
 				var obj = {};
 				obj[tname] = html;
 				tname = obj;
 			}
+			return tname;
+		},
+		elSetHTML: function(tname, html){
+			tname = this._getNVObject(tname, html);
 			for (var n in tname){
 				var el = this.gel(n);
 				if (!L.isNull(el)){ 
 					el.innerHTML = tname[n];
+				}
+			}
+		},
+		elSetValue: function(tname, html){
+			tname = this._getNVObject(tname, html);
+			for (var n in tname){
+				var el = this.gel(n);
+				if (!L.isNull(el)){ 
+					el.value = tname[n];
 				}
 			}
 		},
