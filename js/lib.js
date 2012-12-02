@@ -71,10 +71,11 @@ Component.entryPoint = function(NS){
 			
 			if (!cfg['isRowWidget']){
 				
+				var tp = this._TId[cfg['ftname']];
 				var __self = this;
 				E.on(container, 'click', function(e){
 					var el = E.getTarget(e);
-					if (__self.onClick(el)){ E.preventDefault(e); }
+					if (__self.onClick(el, tp)){ E.preventDefault(e); }
 				});
 				
 				this.render();
