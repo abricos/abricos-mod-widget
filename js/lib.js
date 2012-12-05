@@ -160,12 +160,14 @@ Component.entryPoint = function(NS){
 				}
 			}
 		},
-		elEnable: function(tname){ this.elSetDisabled(tname, false); },
-		elDisable: function(tname){ this.elSetDisabled(tname, true); },
-		elSetDisabled: function(tname, isdis){
-			tname = this._getNVObject(tname, isdis);
-			for (var n in tname){
-				var el = this.gel(n);
+		elEnable: function(els){ this.elSetDisabled(els, false); },
+		elDisable: function(els){ this.elSetDisabled(els, true); },
+		elSetDisabled: function(els, isdis){
+			els = this.gels(els);
+			
+			if (!L.isArray(els)){ return; }
+			for (var i=0;i<els.length;i++){
+				var el = this.gel(els[i]);
 				if (!L.isNull(el)){
 					el.disabled = isdis ? "disabled" : "";
 				}
