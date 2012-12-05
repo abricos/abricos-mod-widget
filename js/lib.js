@@ -78,6 +78,15 @@ Component.entryPoint = function(NS){
 					if (__self.onClick(el, tp)){ E.preventDefault(e); }
 				});
 				
+				if (L.isFunction(this.onEnter)){
+					E.on(container, 'keypress', function(e){
+						var el = E.getTarget(e);
+						if (e.keyCode == 13){
+							if (__self.onEnter(el, tp)){ E.preventDefault(e); }
+						}
+					});
+				}
+				
 				this.render();
 			}
 		},
