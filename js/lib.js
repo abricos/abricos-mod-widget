@@ -151,12 +151,23 @@ Component.entryPoint = function(NS){
 				}
 			}
 		},
-		elSetValue: function(tname, html){
-			tname = this._getNVObject(tname, html);
+		elSetValue: function(tname, value){
+			tname = this._getNVObject(tname, value);
 			for (var n in tname){
 				var el = this.gel(n);
 				if (!L.isNull(el)){ 
 					el.value = tname[n];
+				}
+			}
+		},
+		elEnable: function(tname){ this.elSetDisabled(tname, false); },
+		elDisable: function(tname){ this.elSetDisabled(tname, true); },
+		elSetDisabled: function(tname, isdis){
+			tname = this._getNVObject(tname, isdis);
+			for (var n in tname){
+				var el = this.gel(n);
+				if (!L.isNull(el)){
+					el.disabled = isdis ? "disabled" : "";
 				}
 			}
 		},
