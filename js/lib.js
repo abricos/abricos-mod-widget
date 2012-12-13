@@ -156,7 +156,8 @@ Component.entryPoint = function(NS){
 			for (var n in tname){
 				var el = this.gel(n);
 				if (!L.isNull(el)){ 
-					el.innerHTML = tname[n];
+					tname[n] = L.isNumber(tname[n]) ? tname[n]+'' : tname[n];
+					el.innerHTML = L.isString(tname[n]) ? tname[n] : '';
 				}
 			}
 		},
@@ -164,8 +165,9 @@ Component.entryPoint = function(NS){
 			tname = this._getNVObject(tname, value);
 			for (var n in tname){
 				var el = this.gel(n);
-				if (!L.isNull(el)){ 
-					el.value = tname[n];
+				if (!L.isNull(el)){
+					tname[n] = L.isNumber(tname[n]) ? tname[n]+'' : tname[n];
+					el.value = L.isString(tname[n]) ? tname[n] : '';
 				}
 			}
 		},
