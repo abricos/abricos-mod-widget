@@ -135,6 +135,14 @@ Component.entryPoint = function(NS){
 		},
 		elHide: function(els){ this.elSetVisible(els, false); },
 		elShow: function(els){ this.elSetVisible(els, true); },
+		elHideShow: function(hels, sels){
+			this.elHide(hels);
+			this.elShow(sels);
+		},
+		elShowHide: function(sels, hels){
+			this.elShow(sels);
+			this.elHide(hels);
+		},
 		elSetVisible: function(els, show){
 			els = this.gels(els);
 			if (!L.isArray(els)){ return; }
