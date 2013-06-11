@@ -1,5 +1,4 @@
 /*
-@version $Id$
 @package Abricos
 @copyright Copyright (C) 2012 Abricos All rights reserved.
 @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -12,8 +11,6 @@ Component.entryPoint = function(NS){
 	var Dom = YAHOO.util.Dom,
 		E = YAHOO.util.Event,
 		L = YAHOO.lang;
-
-	
 
 	/**
 	 * Виджет.
