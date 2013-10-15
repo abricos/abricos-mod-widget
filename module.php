@@ -5,13 +5,13 @@
  * @package Abricos 
  * @subpackage Widget
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- * @author Alexander Kuzmin (roosit@abricos.org)
+ * @author Alexander Kuzmin <roosit@abricos.org>
  */
 
 class WidgetModule extends Ab_Module {
 	public function __construct(){
 		// Версия модуля
-		$this->version = "0.1.2";
+		$this->version = "0.1.3";
 		
 		// Название модуля
 		$this->name = "widget";

@@ -25,6 +25,7 @@ Component.entryPoint = function(NS){
 			'buildTemplate': null,
 			'tnames': null, 
 			'ftname': null, // Main (first) template name
+			'override': null, // компонент перегрузки
 			'isRowWidget': false
 		}, cfg || {});
 		
@@ -56,7 +57,7 @@ Component.entryPoint = function(NS){
 			if (!L.isString(ftName)){
 				ftName = cfg['ftname'] = cfg['tnames'].split(',')[0];
 			}
-			var TM = cfg['buildTemplate'](this, cfg['tnames']);
+			var TM = cfg['buildTemplate'](this, cfg['tnames'], cfg['override']);
 			var html = TM.replace(ftName, this.buildTData(p0, p1, p2, p3, p4, p5, p6, p7));
 			if (cfg['isRowWidget']){
 				container.innerHTML += html;
