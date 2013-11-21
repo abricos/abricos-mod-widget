@@ -1,16 +1,19 @@
 /*
 @package Abricos
-@copyright Copyright (C) 2012 Abricos All rights reserved.
 @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 */
 
 var Component = new Brick.Component();
-Component.requires = {};
+Component.requires = {
+	'yui': ['node']
+};
 Component.entryPoint = function(NS){
 
-	var Dom = YAHOO.util.Dom,
-		E = YAHOO.util.Event,
-		L = YAHOO.lang;
+	var Y = Brick.YUI,
+		L = Y.Lang,
+		Dom = Y.DOM;
+
+	var E = YAHOO.util.Event;
 
 	/**
 	 * Виджет.
@@ -21,7 +24,7 @@ Component.entryPoint = function(NS){
 	 * 		Отрисовка запускается отдельно виджетом родителя.
 	 */
 	var Widget = function(container, cfg, p0, p1, p2, p3, p4, p5, p6, p7){
-		cfg = L.merge({
+		cfg = Y.merge({
 			'buildTemplate': null,
 			'tnames': null, 
 			'ftname': null, // Main (first) template name
@@ -31,13 +34,14 @@ Component.entryPoint = function(NS){
 		
 		var sErr = "Error in Brick.mod.Widget: ";
 		
-		container = Dom.get(container);
+		container = L.isString(container) ? Dom.byId(container) : container;
+		
 		if (L.isNull(container)){
 			Brick.console(sErr+"container is null");
 			return;
 		}
 		
-		if (!L.isNull(container) && L.isFunction(cfg['buildTemplate']) 
+		if (L.isFunction(cfg['buildTemplate']) 
 				&& L.isString(cfg['tnames'])){
 
 			this.initMethod(container, cfg, p0, p1, p2, p3, p4, p5, p6, p7);
@@ -59,6 +63,7 @@ Component.entryPoint = function(NS){
 			}
 			var TM = cfg['buildTemplate'](this, cfg['tnames'], cfg['override']);
 			var html = TM.replace(ftName, this.buildTData(p0, p1, p2, p3, p4, p5, p6, p7));
+			
 			if (cfg['isRowWidget']){
 				container.innerHTML += html;
 			}else{
@@ -71,9 +76,13 @@ Component.entryPoint = function(NS){
 				
 				var tp = this._TId[cfg['ftname']];
 				var __self = this;
-				E.on(container, 'click', function(e){
-					var el = E.getTarget(e);
-					if (__self.onClick(el, tp)){ E.preventDefault(e); }
+				
+				Y.one(container).on('click', function(e){
+					var el = e.target.getDOMNode();
+
+					if (__self.onClick(el, tp)){ 
+						e.preventDefault(); 
+					}
 				});
 				
 				if (L.isFunction(this.onEnter)){
@@ -191,7 +200,7 @@ Component.entryPoint = function(NS){
 			}
 		},
 		componentLoad: function(module, component, callback, cfg){
-			cfg = L.merge({
+			cfg = Y.merge({
 				'hide': '',
 				'show': ''
 			}, cfg || {});
