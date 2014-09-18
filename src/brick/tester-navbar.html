@@ -1,0 +1,107 @@
+<!--[*]
+
+[*]-->
+<div class="aw-sys" class="">
+    <h4>AppMenu</h4>
+
+    <div id="navbar"></div>
+
+    <a href="#" id="trigger3">Show menu</a>
+</div>
+
+<script>
+
+    Brick.f('widget', 'navbar', function(){
+
+        var Y = Brick.YUI,
+                NS = Brick.mod.widget;
+
+        var menu3 = new Y.Menu({
+            boundingBox: '#navbar',
+            items: [
+                {
+                    content: '<a>Format</a>',
+                    submenu: {
+                        items: [
+                            {
+                                content: '<span class="glyphicon glyphicon-bold"></span><a>Bold</a>',
+                                shortcut: {
+                                    macintosh: {
+                                        metaKey: true,
+                                        keys: ['B', 'b'],
+                                        text: '⌘B'
+                                    },
+                                    defaultShortcut: {
+                                        shiftKey: true,
+                                        keys: ['B', 'b'],
+                                        text: 'Shift + B'
+                                    }
+                                }
+                            },
+                            {
+                                content: '<span class="glyphicon glyphicon-italic"></span><a>Italic</a>',
+                                shortcut: {
+                                    macintosh: {
+                                        metaKey: true,
+                                        keys: ['I', 'i'],
+                                        text: '⌘I'
+                                    },
+                                    defaultShortcut: {
+                                        shiftKey: true,
+                                        keys: ['I', 'i'],
+                                        text: 'Shift + I'
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    divider: true
+                },
+                {
+                    content: '<a>Copy</a>',
+                    disabled: true
+                },
+                {
+                    content: '<a>Paste</a>',
+                    disabled: true
+                }
+            ],
+            trigger: '#trigger3'
+        }).render();
+
+        /*
+
+        var appMenu = new SYS.AppMenu({
+            nodes: [
+                {
+                    id: 'menu1',
+                    url: '/menu1/',
+                    children: [
+                        {
+                            id: 'menu1-1',
+                            url: '/menu1-1/'
+                        }
+                    ]
+                }, {
+                    id: 'menu2',
+                    url: '/menu2/'
+                }
+            ]
+        });
+
+        new SYS.AppMenuWidget({
+            boundingBox: Y.Node.one('#testmenu'),
+            appMenu: appMenu
+        });
+
+
+        new NS.NavbarWidget({
+            boundingBox: Y.Node.one('#navbar'),
+            menu: Y.MenuItem()
+        });
+        /**/
+    });
+
+</script>
