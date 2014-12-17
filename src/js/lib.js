@@ -5,7 +5,8 @@
 
 var Component = new Brick.Component();
 Component.requires = {
-    'yui': ['node']
+    yahoo: ['dom', 'event'],
+    yui: ['node']
 };
 Component.entryPoint = function(NS){
 
