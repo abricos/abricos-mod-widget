@@ -1,0 +1,24 @@
+{
+  "name": "abricos-mod-widget",
+  "description": "Widget Module for Abricos Platform",
+  "version": "0.1.5",
+  "author": {
+    "name": "Alexander Kuzmin",
+    "email": "roosit@abricos.org",
+    "web": "http://abricos.org",
+    "twitter": "roositab"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abricos/abricos-mod-widget.git"
+  },
+  "keywords": [
+    "abricos",
+    "widget"
+  ],
+  "bugs": {
+    "url": "https://github.com/abricos/abricos-mod-widget/issues"
+  },
+  "homepage": "http://abricos.org/mods/widget/"
+}

@@ -11,7 +11,7 @@
 class WidgetModule extends Ab_Module {
 	public function __construct(){
 		// Версия модуля
-		$this->version = "0.1.4";
+		$this->version = "{C#VERSION}";
 		
 		// Название модуля
 		$this->name = "widget";
