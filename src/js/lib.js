@@ -135,7 +135,10 @@ Component.entryPoint = function(NS){
                 }
                 n = a[1];
             }
-            return this._TM.getEl(tName + '.' + n);
+            var elKey = tName + '.' + n,
+                ret = this._TM.getEl(elKey);
+
+            return ret;
         },
         gels: function(els){
             if (!L.isString(els)){
