@@ -1,3 +1,95 @@
+.yui-calcontainer {
+  background-color: #f2f2f2;
+  border: 1px solid #808080;
+  padding: 10px;
+
+  .yui-calendar {
+    border-spacing: 0;
+    border-collapse: collapse;
+    font: 100% sans-serif;
+    text-align: center;
+    margin: 0;
+    position: relative;
+
+    .calhead {
+      background: transparent;
+      border: none;
+      vertical-align: middle;
+      padding: 0;
+    }
+
+    .calheader {
+      background: transparent;
+      font-weight: bold;
+      padding: 0 0 .6em 0;
+      text-align: center;
+    }
+    .calheader {
+      position: relative;
+      width: 100%;
+      text-align: center;
+    }
+
+    .calnavleft {
+      background: url(/vendor/yui2in3/assets/skins/sam/sprite.png) no-repeat 0 -450px;
+      width: 25px;
+      height: 15px;
+      top: 0;
+      bottom: 0;
+      left: -10px;
+      margin-left: .4em;
+      cursor: pointer;
+    }
+    .calnavleft {
+      position: absolute;
+      z-index: 1;
+      text-indent: -10000em;
+      overflow: hidden;
+    }
+
+    .calnavright {
+      background: url(/vendor/yui2in3/assets/skins/sam/sprite.png) no-repeat 0 -500px;
+      width: 25px;
+      height: 15px;
+      top: 0;
+      bottom: 0;
+      right: -10px;
+      margin-right: .4em;
+      cursor: pointer;
+    }
+    .calnavright {
+      position: absolute;
+      z-index: 1;
+      text-indent: -10000em;
+      overflow: hidden;
+    }
+    .calweekdayrow {
+      height: 2em;
+    }
+
+    td.calcell.oom {
+      background-color: #ccc;
+      color: #a6a6a6;
+      cursor: default;
+    }
+    td.calcell {
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 2px 6px;
+      height: 1.6em;
+      line-height: 1.6em;
+      text-align: center;
+      white-space: nowrap;
+    }
+    td.calcell a {
+      color: #06c;
+      display: block;
+      height: 100%;
+      text-decoration: none;
+    }
+  }
+}
+
 .aw-widget .datetime-input {
   .form-control {
     display: inline-block;
@@ -7,7 +99,7 @@
     border: 1px solid #CCCCCC;
     cursor: pointer;
     padding-right: 2em;
-    width: 8em;
+    width: 9em;
   }
   .dttime {
     border: 1px solid #CCCCCC;
